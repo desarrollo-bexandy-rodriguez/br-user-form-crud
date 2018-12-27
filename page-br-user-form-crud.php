@@ -62,6 +62,10 @@ get_header(); ?>
               </table>
             </div>
           </div>
+          <div>
+            <p>Ver el <a href="https://github.com/desarrollo-bexandy-rodriguez/br-user-form-crud" target="_blank">Código Fuente</a> del módulo "Frontend Formulario con CRUD para Wordpress" en Github.</p>
+
+          </div>
         </div>
       </section>
     </main><!-- #main -->
