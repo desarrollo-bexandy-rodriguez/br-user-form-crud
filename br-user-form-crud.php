@@ -66,7 +66,7 @@ function br_process_form_submit() {
 
 		$wpdb->query("INSERT INTO $table_name(nombre,telefono, correo, edad, genero) VALUES('$nombre','$telefono', '$correo', '$edad', '$genero')");
 
-		wp_redirect( esc_url_raw( add_query_arg( array(	),home_url('contact-us') ) ) );
+		wp_redirect( esc_url_raw( add_query_arg( array(	),home_url('br-user-form-crud') ) ) );
 	} else {
 		wp_die( __( 'Invalid nonce specified', 'my_text_domain' ), __( 'Error', 'my_text_domain' ), array(
 						'response' 	=> 403,
