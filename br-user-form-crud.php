@@ -1,8 +1,8 @@
 <?php
 /*
-Plugin Name: My WordPress Plugin
-Plugin URI: https://wordpress.org/plugins/
-Description: Just another WordPress plugin.
+Plugin Name: BR Formulario con CRUD Frontend
+Plugin URI: https://github.com/desarrollo-bexandy-rodriguez/br-user-form-crud
+Description: Formulario con CRUD en el Frontend para Wordpress.
 Version: 1.0.0
 Author: Bexandy Rodríguez
 Author URI: https://www.bexandyrodriguez.com.ve/
