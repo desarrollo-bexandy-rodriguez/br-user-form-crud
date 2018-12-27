@@ -5,7 +5,7 @@ $table_name = $wpdb->prefix . "br_formcrud";
 if(isset($_GET["del"])) {
      $del_id = $_GET["del"];
      $wpdb->query("DELETE FROM $table_name WHERE id='$del_id'");
-     wp_redirect( esc_url_raw( add_query_arg( array(  ),home_url('contact-us') ) ) );
+     wp_redirect( esc_url_raw( add_query_arg( array(  ),home_url('br-user-form-crud') ) ) );
   }
 
 get_header(); ?>
