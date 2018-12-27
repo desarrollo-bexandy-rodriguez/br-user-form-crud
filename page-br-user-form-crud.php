@@ -45,7 +45,7 @@ get_header(); ?>
                         <td><?php echo $print->correo ?></td>
                         <td><?php echo $print->edad ?></td>
                         <td><?php echo $print->genero ?></td>
-                        <td><a href="<?php echo esc_url_raw( add_query_arg( array( 'del' => $print->id ),home_url('contact-us') ) ) ?>">Borrar</a></td>
+                        <td><a href="<?php echo esc_url_raw( add_query_arg( array( 'del' => $print->id ),home_url('br-user-form-crud') ) ) ?>">Borrar</a></td>
                       </tr>
                   <?php 
                     }
