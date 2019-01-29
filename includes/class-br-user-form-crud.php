@@ -6,7 +6,7 @@
  * A class definition that includes attributes and functions used across both the
  * public-facing side of the site and the admin area.
  *
- * @link       http://example.com
+ * @link       https://github.com/desarrollo-bexandy-rodriguez/br-user-form-crud
  * @since      1.0.0
  *
  * @package    BR_User_Form_Crud
@@ -169,6 +169,9 @@ class BR_User_Form_Crud {
 		$this->loader->add_action('admin_post_br-user-form-crud', $plugin_admin, 'br_process_form_submit' );
 
 		$this->loader->add_action('widgets_init', $plugin_admin, 'br_register_widget' );
+
+		$this->loader->add_action('admin_post_nopriv_br-user-form-crud-upt', $plugin_admin, 'br_update_form_data' );
+		$this->loader->add_action('admin_post_br-user-form-crud-upt', $plugin_admin, 'br_update_form_data' );
 	}
 
 	/**

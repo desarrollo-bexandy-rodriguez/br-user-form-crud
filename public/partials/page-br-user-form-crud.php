@@ -5,7 +5,7 @@
  *
  * This file is used to markup the public-facing aspects of the plugin.
  *
- * @link       http://example.com
+ * @link       https://github.com/desarrollo-bexandy-rodriguez/br-user-form-crud
  * @since      1.0.0
  *
  * @package    BR_User_Form_Crud
@@ -62,7 +62,10 @@ get_header(); ?>
                         <td><?php echo $print->correo ?></td>
                         <td><?php echo $print->edad ?></td>
                         <td><?php echo $print->genero ?></td>
-                        <td><a href="<?php echo esc_url_raw( add_query_arg( array( 'del' => $print->id ),home_url('br-user-form-crud') ) ) ?>">Borrar</a></td>
+                        <td>
+                          <a href="<?php echo esc_url_raw( add_query_arg( array( 'upt' => $print->id ),home_url('br-user-form-crud') ) ) ?>">Editar</a>
+                          <a href="<?php echo esc_url_raw( add_query_arg( array( 'del' => $print->id ),home_url('br-user-form-crud') ) ) ?>">Borrar</a>
+                        </td>
                       </tr>
                   <?php 
                     }
@@ -77,6 +80,75 @@ get_header(); ?>
                   ?>
                 </tbody>
               </table>
+              <?php
+               if(isset($_GET["upt"])) {
+                 $upt_id = $_GET["upt"];
+                 $result = $wpdb->get_results("SELECT * FROM $table_name WHERE id='$upt_id'");
+                 foreach($result as $print) {
+                   $user_id = $print->id;
+                   $nombre = $print->nombre;
+                   $telefono = $print->telefono;
+                   $correo = $print->correo; 
+                   $edad = $print->edad;
+                   $genero = $print->genero;
+                 }
+                 $br_form_crud_upt_nonce = wp_create_nonce( 'br_form_crud_upt_nonce_value' ); 
+              ?>
+                  <div id="br-page-title">
+                    <h1 class="js-quickedit-page-title title page-title">Editar Usuario seleccionado</h1>
+                  </div>
+                   <table class='wp-list-table widefat striped'>
+                     <thead>
+                       <tr>
+                        <th>No</th>
+                        <th>Nombre</th>
+                        <th>Teléfono</th>
+                        <th>Correo</th>
+                        <th>Edad</th>
+                        <th>Genero</th>
+                        <th>operación</th>
+                       </tr>
+                     </thead>
+                     <tbody>
+                       <form action="<?php echo esc_url( admin_url('admin-post.php') ); ?>" method='post' id="br-user-form-crud-upt">
+                        <input type="hidden" name="action" value="br-user-form-crud-upt">
+                        <input type="hidden" name="br_form_crud_upt_nonce" value="<?php echo $br_form_crud_upt_nonce ?>">
+                         <tr>
+                          <td>
+                            <?php echo $user_id ?>
+                            <input type='hidden' id='uptid' name='uptid' value="<?php echo $user_id ?>" >
+                          </td>
+                          <td>
+                            <input type='text' id='uptnombre' name='uptnombre' value="<?php echo $nombre ?>" >
+                          </td>
+                          <td>
+                            <input type='text' id='upttelefono' name='upttelefono' value="<?php echo $telefono ?>" >
+                          </td>
+                          <td>
+                            <input type='text' id='uptcorreo' name='uptcorreo' value="<?php echo $correo ?>" >
+                          </td>
+                          <td>
+                            <input type='text' id='uptedad' name='uptedad' value="<?php echo $edad ?>" >
+                          </td>
+                          <td>
+
+                            <select id="uptgenero" name="uptgenero" value="<?php echo $genero ?>">
+                              <option value="femenino">Femenino</option>
+                              <option value="masculino">Masculino</option>
+                            </select>
+                          </td>
+
+                          <td>
+                            <input type="submit" id="upt-submit" name="uptop" value="Actualizar">
+                            <a href="<?php echo esc_url_raw( add_query_arg( array(),home_url('br-user-form-crud') ) ) ?>">Cancelar</a>
+                          </td>
+                         </tr>
+                       </form>
+                     </tbody>
+                   </table>
+              <?php
+               }
+              ?>
             </div>
           </div>
           <div>

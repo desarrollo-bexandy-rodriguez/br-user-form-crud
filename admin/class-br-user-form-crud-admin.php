@@ -3,7 +3,7 @@
 /**
  * The admin-specific functionality of the plugin.
  *
- * @link       http://example.com
+ * @link       https://github.com/desarrollo-bexandy-rodriguez/br-user-form-crud
  * @since      1.0.0
  *
  * @package    BR_User_Form_Crud
@@ -148,5 +148,30 @@ class BR_User_Form_Crud_Admin {
 	// register BR_Widget widget
 	public function br_register_widget() {
 	    register_widget( 'BR_User_Form_Crud_Widget' );
+	}
+
+	public function br_update_form_data() {
+		global $wpdb;
+		$table_name = $wpdb->prefix . "br_formcrud";
+
+		if( isset( $_POST['br_form_crud_upt_nonce'] ) && wp_verify_nonce( $_POST['br_form_crud_upt_nonce'], 'br_form_crud_upt_nonce_value') ) {
+			$id = $_POST['uptid'];
+			$nombre = $_POST['uptnombre'];
+			$correo = $_POST['uptcorreo'];
+			$telefono = $_POST['upttelefono'];
+			$edad = $_POST['uptedad'];
+			$genero = $_POST['uptgenero'];
+
+			$wpdb->query("UPDATE $table_name SET nombre='$nombre', correo='$correo', telefono='$telefono', edad='$edad', genero='$genero' WHERE id='$id'");
+
+			wp_redirect( esc_url_raw( add_query_arg( array(	),home_url('br-user-form-crud') ) ) );
+		} else {
+			wp_die( __( 'Invalid nonce specified', 'br-user-form-crud' ), __( 'Error', 'br-user-form-crud' ), array(
+							'response' 	=> 403,
+							'back_link' => 'index.php',
+
+					) );
+		}
+	
 	}
 }

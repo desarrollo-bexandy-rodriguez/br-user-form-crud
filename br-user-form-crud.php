@@ -8,13 +8,13 @@
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @link              http://example.com
+ * @link              https://github.com/desarrollo-bexandy-rodriguez/br-user-form-crud
  * @since             1.0.0
  * @package           BR_User_Form_Crud
  *
  * @wordpress-plugin
  * Plugin Name:       BR Formulario con CRUD Frontend (Bexandy Rodriguez)
- * Plugin URI:        http://example.com/plugin-name-uri/
+ * Plugin URI:        https://github.com/desarrollo-bexandy-rodriguez/br-user-form-crud
  * Description:       Formulario con CRUD en el Frontend para Wordpress.
  * Version:           1.0.0
  * Author:            Bexandy Rodríguez
