@@ -1,23 +1,18 @@
 <?php
-// register BR_Widget widget
-function register_BR_widget() {
-    register_widget( 'BR_Widget' );
-}
-add_action( 'widgets_init', 'register_BR_widget' );
- 
+
 /**
- * Adds BR_Widget widget.
+ * Adds BR_User_Form_Crud_Widget.
  */
-class BR_Widget extends WP_Widget {
+class BR_User_Form_Crud_Widget extends WP_Widget {
 
 	/**
 	 * Register widget with WordPress.
 	 */
 	function __construct() {
 		parent::__construct(
-			'BR_widget', // Base ID
-			esc_html__( 'Agregar Usuario a la BD', 'br_text_domain' ), // Name
-			array( 'description' => esc_html__( 'Formulario para agregar un usuario a la BD', 'br_text_domain' ), ) // Args
+			'BR_User_Form_Crud_Widget', // Base ID
+			esc_html__( 'Agregar Usuario a la BD', 'br-user-form-crud' ), // Name
+			array( 'description' => esc_html__( 'Formulario para agregar un usuario a la BD', 'br-user-form-crud' ), ) // Args
 		);
 	}
 
@@ -82,10 +77,10 @@ class BR_Widget extends WP_Widget {
 	 * @param array $instance Previously saved values from database.
 	 */
 	public function form( $instance ) {
-		$title = ! empty( $instance['title'] ) ? $instance['title'] : esc_html__( 'Agregar Usuario a la BD', 'br_text_domain' );
+		$title = ! empty( $instance['title'] ) ? $instance['title'] : esc_html__( 'Agregar Usuario a la BD', 'br-user-form-crud' );
 		?>
 		<p>
-		<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Titulo:', 'br_text_domain' ); ?></label> 
+		<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Titulo:', 'br-user-form-crud' ); ?></label> 
 		<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
 		</p>
 		<?php 
@@ -108,4 +103,4 @@ class BR_Widget extends WP_Widget {
 		return $instance;
 	}
 
-} // class BR_Widget
+} // class BR_User_Form_Crud_Widget

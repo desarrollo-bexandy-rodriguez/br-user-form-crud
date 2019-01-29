@@ -1,105 +1,82 @@
 <?php
-/*
-Plugin Name: BR Formulario con CRUD Frontend
-Plugin URI: https://github.com/desarrollo-bexandy-rodriguez/br-user-form-crud
-Description: Formulario con CRUD en el Frontend para Wordpress.
-Version: 1.0.0
-Author: Bexandy Rodríguez
-Author URI: https://www.bexandyrodriguez.com.ve/
-*/
 
-include( plugin_dir_path( __FILE__ ) . 'br-widget.php');
+/**
+ * The plugin bootstrap file
+ *
+ * This file is read by WordPress to generate the plugin information in the plugin
+ * admin area. This file also includes all of the dependencies used by the plugin,
+ * registers the activation and deactivation functions, and defines a function
+ * that starts the plugin.
+ *
+ * @link              http://example.com
+ * @since             1.0.0
+ * @package           BR_User_Form_Crud
+ *
+ * @wordpress-plugin
+ * Plugin Name:       BR Formulario con CRUD Frontend (Bexandy Rodriguez)
+ * Plugin URI:        http://example.com/plugin-name-uri/
+ * Description:       Formulario con CRUD en el Frontend para Wordpress.
+ * Version:           1.0.0
+ * Author:            Bexandy Rodríguez
+ * Author URI:        http://bexandyrodriguez.com.ve/
+ * License:           GPL-2.0+
+ * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * Text Domain:       br-user-form-crud
+ * Domain Path:       /languages
+ */
 
-register_activation_hook( __FILE__,"br_formCrudTable");
-
-function br_formCrudTable() {
-	global $wpdb;
- 	$charset_collate = $wpdb->get_charset_collate();
- 	$table_name = $wpdb->prefix . "br_formcrud";
- 	$sql = "CREATE TABLE `$table_name` (
- 		`id` int(11) NOT NULL AUTO_INCREMENT,
- 		`nombre` varchar(40) DEFAULT NULL,
- 		`telefono` varchar(40) DEFAULT NULL,
- 		`correo` varchar(40) DEFAULT NULL,
- 		`edad` varchar(25) DEFAULT NULL,
- 		`genero` varchar(40) DEFAULT NULL,
- 		PRIMARY KEY(id)
- 	) ENGINE=MyISAM DEFAULT CHARSET=latin1;
- 	";
- 	if($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name) {
- 		require_once(ABSPATH . "wp-admin/includes/upgrade.php");
- 		dbDelta($sql);
- 	}
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
 }
 
-function check_pages_live(){
-	if(get_page_by_path( 'br-user-form-crud' ) == NULL) {
-        create_pages_fly('br-user-form-crud');
-    }
-}
-add_action('init','check_pages_live');
+/**
+ * Currently plugin version.
+ * Start at version 1.0.0 and use SemVer - https://semver.org
+ * Rename this for your plugin and update it as you release new versions.
+ */
+define( 'BR_USER_FORM_CRUD_VERSION', '1.0.0' );
 
-function create_pages_fly($pageName) {
-        $createPage = array(
-          'post_title'    => $pageName,
-          'post_content'  => 'Starter content',
-          'post_status'   => 'publish',
-          'post_author'   => 1,
-          'post_type'     => 'page',
-          'post_name'     => $pageName
-        );
-
-        // Insert the post into the database
-        wp_insert_post( $createPage );
-    }
-
-function br_process_form_submit() {
-	global $wpdb;
-	$table_name = $wpdb->prefix . "br_formcrud";
-
-	if( isset( $_POST['br_form_crud_nonce'] ) && wp_verify_nonce( $_POST['br_form_crud_nonce'], 'br_form_crud_nonce_value') ) {
-		$nombre = $_POST['nombre_usuario'];
-		$correo = $_POST['correo_electronico'];
-		$telefono = $_POST['numero_telefonico'];
-		$edad = $_POST['edad_usuario'];
-		$genero = $_POST['genero_usuario'];
-
-		$wpdb->query("INSERT INTO $table_name(nombre,telefono, correo, edad, genero) VALUES('$nombre','$telefono', '$correo', '$edad', '$genero')");
-
-		wp_redirect( esc_url_raw( add_query_arg( array(	),home_url('br-user-form-crud') ) ) );
-	} else {
-		wp_die( __( 'Invalid nonce specified', 'my_text_domain' ), __( 'Error', 'my_text_domain' ), array(
-						'response' 	=> 403,
-						'back_link' => 'index.php',
-
-				) );
-	}
-	
-}
-add_action( 'admin_post_nopriv_br-user-form-crud', 'br_process_form_submit' );
-add_action( 'admin_post_br-user-form-crud', 'br_process_form_submit' );
-
-
-
-add_filter( 'page_template', 'br_page_template' );
-function br_page_template( $page_template )
-{
-    if ( is_page( 'br-user-form-crud' ) ) {
-        $page_template = dirname( __FILE__ ) . '/page-br-user-form-crud.php';
-    }
-    return $page_template;
+/**
+ * The code that runs during plugin activation.
+ * This action is documented in includes/class-br-user-form-crud-activator.php
+ */
+function activate_br_user_form_crud() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-br-user-form-crud-activator.php';
+	BR_User_Form_Crud_Activator::activate();
 }
 
-//add_action( 'body_class', 'my_custom_class');
-function my_custom_class( $classes ) {
-    if ( is_page( 'br-user-form-crud' ) ) {
-
-	    unset( $classes[array_search('page-two-column', $classes)] );
-
-	    // Add custom class
-	    $classes[] = 'has-sidebar';
-    }
-    
-
-    return $classes;
+/**
+ * The code that runs during plugin deactivation.
+ * This action is documented in includes/class-br-user-form-crud-deactivator.php
+ */
+function deactivate_br_user_form_crud() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-br-user-form-crud-deactivator.php';
+	BR_User_Form_Crud_Deactivator::deactivate();
 }
+
+register_activation_hook( __FILE__, 'activate_br_user_form_crud' );
+register_deactivation_hook( __FILE__, 'deactivate_br_user_form_crud' );
+
+/**
+ * The core plugin class that is used to define internationalization,
+ * admin-specific hooks, and public-facing site hooks.
+ */
+require plugin_dir_path( __FILE__ ) . 'includes/class-br-user-form-crud.php';
+
+/**
+ * Begins execution of the plugin.
+ *
+ * Since everything within the plugin is registered via hooks,
+ * then kicking off the plugin from this point in the file does
+ * not affect the page life cycle.
+ *
+ * @since    1.0.0
+ */
+function run_br_user_form_crud() {
+
+	$plugin = new BR_User_Form_Crud();
+	$plugin->run();
+
+}
+run_br_user_form_crud();

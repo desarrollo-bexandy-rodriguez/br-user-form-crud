@@ -1,4 +1,21 @@
 <?php
+
+/**
+ * Provide a public-facing view for the plugin
+ *
+ * This file is used to markup the public-facing aspects of the plugin.
+ *
+ * @link       http://example.com
+ * @since      1.0.0
+ *
+ * @package    BR_User_Form_Crud
+ * @subpackage BR_User_Form_Crud/public/partials
+ */
+?>
+
+<!-- This file should primarily consist of HTML with a little bit of PHP. -->
+
+<?php
 global $wpdb;
 $table_name = $wpdb->prefix . "br_formcrud";
 
@@ -74,4 +91,3 @@ get_header(); ?>
 </div><!-- .wrap -->
 
 <?php get_footer();
-
